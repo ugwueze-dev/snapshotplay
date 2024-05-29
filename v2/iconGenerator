@@ -1,0 +1,27 @@
+<?php
+class IconGenerator {
+    public static function generateIconFromUrl($url, $iconWidth = 64, $iconHeight = 64) {
+        // Create an image resource from the URL
+        $image = imagecreatefromjpeg($url);
+
+        // Create a blank canvas for the icon
+        $icon = imagecreatetruecolor($iconWidth, $iconHeight);
+
+        // Resize and copy the profile picture onto the icon canvas
+        imagecopyresampled($icon, $image, 0, 0, 0, 0, $iconWidth, $iconHeight, imagesx($image), imagesy($image));
+
+        // Capture the icon as an image in memory
+        ob_start();
+        imagepng($icon); // Change the output function according to your desired image format
+        $iconData = ob_get_contents();
+        ob_end_clean();
+
+        // Free up memory by destroying the image resources
+        imagedestroy($image);
+        imagedestroy($icon);
+
+        return $iconData;
+    }
+}
+
+?>

@@ -1,0 +1,16 @@
+{
+    "require": {
+        "lcobucci/jwt": "^5.0",
+        "kreait/firebase-php": "^7.3",
+        "sendgrid/sendgrid": "~7",
+        "google/apiclient": "^2.0",
+        "guzzlehttp/guzzle": "^7.0",
+        "predis/predis": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lcobucci\\JWT\\": "vendor/lcobucci/jwt/src/"
+            
+        }
+     }
+}

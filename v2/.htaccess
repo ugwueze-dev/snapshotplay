@@ -1,0 +1,21 @@
+Options +FollowSymLinks
+	RewriteEngine On
+
+	# Handle URLs for 'users' or 'game' with subDir
+	RewriteRule ^media/(users|game)/([^/]+)/([^/]+)$ api.php?endpoint=media&dir=$1&subDir=$2&fileName=$3 [QSA,NC,L]
+
+	# Handle URLs for 'users' or 'game' without subDir, directly to fileName
+	RewriteRule ^media/(users|game|system)/([^/]+)$ api.php?endpoint=media&dir=$1&fileName=$2 [QSA,NC,L]
+
+	# Generic rule for other dirs without subDir
+	RewriteRule ^media/([^/]+)/([^/]+)$ api.php?endpoint=media&dir=$1&fileName=$2 [QSA,NC,L]
+	RewriteCond %{SCRIPT_FILENAME} !-d
+	RewriteCond %{SCRIPT_FILENAME} !-f
+	RewriteRule ^([a-zA-Z0-9]+)$ api.php?endpoint=$1 [QSA,NC,L]
+	RewriteRule ^([a-zA-Z0-9]+)/$ api.php?endpoint=$1 [QSA,NC,L]
+	RewriteRule ^([a-zA-Z0-9]+)/([a-zA-Z0-9\-\.]+)$ api.php?endpoint=$1&id=$2 [QSA,NC,L]
+	RewriteRule ^([a-zA-Z0-9]+)/([a-zA-Z0-9\-\.]+)/$ api.php?endpoint=$1&id=$2 [QSA,NC,L]
+	RewriteRule ^([a-zA-Z0-9]+)/([a-zA-Z0-9\-\.]+)/([a-zA-Z0-9\-\.]+)$ api.php?endpoint=$1&id=$2&urlVar=$3 [QSA,NC,L]
+	RewriteRule ^([a-zA-Z0-9]+)/([a-zA-Z0-9\-\.]+)/([a-zA-Z0-9\-\.]+)/$ api.php?endpoint=$1&id=$2&urlVar=$3 [QSA,NC,L]
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
